@@ -87,21 +87,141 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
-    let form = document.querySelector('form');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+    window.TrackJS && TrackJS.install(
+    { 
+      token: "ea52fade250f48a985a94139e92dc77c"
+      // for more configuration options, see https://docs.trackjs.com
     });
 
+    class InputError extends Error 
+    {
+      constructor(message) 
+      {
+        super(message);
+        this.name = "InputError";
+      }
+    }
+                          
+    TrackJS.track('Testing TrackJS!');
+
+    form.addEventListener('submit', e => 
+    {
+      e.preventDefault();
+
+      let form = document.querySelector('form');
+      let output = document.querySelector('output');
+      let operator = document.querySelector('#operator').value;
+
+      try
+      {
+        let firstNum = document.querySelector('#first-num').value;
+        let secondNum = document.querySelector('#second-num').value;
+        if(firstNum == '' || secondNum == '')
+        {
+          throw new InputError("Invalid Input");
+        }
+
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }
+      catch(except)
+      {
+        console.log("Error");
+        output.innerHTML = "Invalid Input";
+      }
+      finally
+      {
+        console.log("Successful End");
+      };
+    });
+
+    window.addEventListener("error", (event) => 
+    {
+      console.log(event);
+    });
+    
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    // Start your code here
-    // You may move this JS to another file if you wish
+    errorBtns[0].addEventListener("click", function()
+    { 
+      console.log("Successful Demo");
+    });
+
+    errorBtns[1].addEventListener("click", function(){ 
+      console.error("Failed Demo");
+    });
+
+    errorBtns[2].addEventListener("click", function()
+    { 
+      console.count("Counter");
+    });
+
+    errorBtns[3].addEventListener("click", function()
+    { 
+      console.warn("Warning Demo");
+    });
+
+    errorBtns[4].addEventListener("click", function()
+    { 
+      num = 100 + 100;
+      console.assert(num == 100 ,{num, errorMsg:"Num is not 100"});
+    });
+
+    errorBtns[5].addEventListener("click", function()
+    { 
+      console.clear();
+    });
+
+    errorBtns[6].addEventListener("click", function()
+    { 
+      console.dir(errorBtns[0]);
+    });
+
+    errorBtns[7].addEventListener("click", function()
+    { 
+      console.dirxml(errorBtns[1]);
+    });
+
+    errorBtns[8].addEventListener("click", function()
+    { 
+      console.group();
+    });
+
+    errorBtns[9].addEventListener("click", function()
+    { 
+      console.groupEnd();
+    });
+
+    errorBtns[10].addEventListener("click", function()
+    { 
+      const example = [
+        ["100", "200"],
+        ["200", "300"],
+        ["300", "400"],
+      ];
+      console.table(example)  
+    });
+
+    errorBtns[11].addEventListener("click", function()
+    { 
+      console.time("Timer");
+    });
+
+    errorBtns[12].addEventListener("click", function()
+    { 
+      console.timeEnd("Timer");
+    });
+
+    errorBtns[13].addEventListener("click", function()
+    { 
+      console.trace();
+    });
+
+    errorBtns[14].addEventListener("click", function()
+    { 
+      NoName();
+    });
   </script>
 </body>
 
