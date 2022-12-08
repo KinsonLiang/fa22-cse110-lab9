@@ -97,9 +97,9 @@
                           
     class CustomError extends Error 
     {
-      constructor(errorMess) 
+      constructor(error_message) 
       {
-        super("The error is : " + errorMess);
+        super(error_message);
         this.name = this.constructor.name;
       }
     }
