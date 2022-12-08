@@ -132,13 +132,15 @@
       };
     });
 
-    window.addEventListener("error", (event) => {
+    window.addEventListener("error", (event) => 
+    {
       console.log(event);
     });
     
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    errorBtns[0].addEventListener("click", function(){ 
+    errorBtns[0].addEventListener("click", function()
+    { 
       console.log("Logging Button");
     });
 
