@@ -94,62 +94,57 @@
       token: "ea52fade250f48a985a94139e92dc77c"
       // for more configuration options, see https://docs.trackjs.com
     });
-
-    class InputError extends Error 
+                          
+    class CustomError extends Error 
     {
-      constructor(message) 
+      constructor(errorMess) 
       {
-        super(message);
-        this.name = "InputError";
+        super("The error is : " + errorMess);
+        this.name = this.constructor.name;
       }
     }
-                          
+
     TrackJS.track('Testing TrackJS!');
+    let form = document.querySelector('form');
 
     form.addEventListener('submit', e => 
     {
-      e.preventDefault();
-
-      let form = document.querySelector('form');
-      let output = document.querySelector('output');
-      let operator = document.querySelector('#operator').value;
-
       try
       {
+        e.preventDefault();
+
+        let output = document.querySelector('output');
+        let operator = document.querySelector('#operator').value;
+
         let firstNum = document.querySelector('#first-num').value;
         let secondNum = document.querySelector('#second-num').value;
-        if(firstNum == '' || secondNum == '')
-        {
-          throw new InputError("Invalid Input");
-        }
 
         output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
       }
       catch(except)
       {
-        console.log("Error");
-        output.innerHTML = "Invalid Input";
+        console.log("Error!");
+        throw new CustomError("Invalid Input");
       }
       finally
       {
-        console.log("Successful End");
+        console.log("Got it");
       };
     });
 
-    window.addEventListener("error", (event) => 
-    {
+    window.addEventListener("error", (event) => {
       console.log(event);
     });
     
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
-    errorBtns[0].addEventListener("click", function()
-    { 
-      console.log("Successful Demo");
+    errorBtns[0].addEventListener("click", function(){ 
+      console.log("Logging Button");
     });
 
-    errorBtns[1].addEventListener("click", function(){ 
-      console.error("Failed Demo");
+    errorBtns[1].addEventListener("click", function()
+    { 
+      console.error("Error Button");
     });
 
     errorBtns[2].addEventListener("click", function()
@@ -159,13 +154,13 @@
 
     errorBtns[3].addEventListener("click", function()
     { 
-      console.warn("Warning Demo");
+      console.warn("This is a warning");
     });
 
     errorBtns[4].addEventListener("click", function()
     { 
-      num = 100 + 100;
-      console.assert(num == 100 ,{num, errorMsg:"Num is not 100"});
+      num = 1 + 1;
+      console.assert(num == 1 ,{num, errorMsg:"Num is not 1"});
     });
 
     errorBtns[5].addEventListener("click", function()
@@ -196,9 +191,9 @@
     errorBtns[10].addEventListener("click", function()
     { 
       const example = [
-        ["100", "200"],
-        ["200", "300"],
-        ["300", "400"],
+        ["10", "20"],
+        ["20", "30"],
+        ["30", "40"],
       ];
       console.table(example)  
     });
@@ -206,6 +201,7 @@
     errorBtns[11].addEventListener("click", function()
     { 
       console.time("Timer");
+      console.log("Timer Started");
     });
 
     errorBtns[12].addEventListener("click", function()
